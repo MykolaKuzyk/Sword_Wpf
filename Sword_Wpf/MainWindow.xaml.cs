@@ -22,25 +22,20 @@ namespace Sword_Wpf
     public partial class MainWindow : Window
     {
         Random random = new Random();
-        SwordDamage swordDamage = new SwordDamage();
+        SwordDamage swordDamage ;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            swordDamage.SetMagic(false);
-            swordDamage.SetFlamin(false);
+            swordDamage = new SwordDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
+            DisplayDamege();
             
         }
 
         public void RollDice()
         {
-            swordDamage.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
-            swordDamage.SetFlamin(flaming.IsChecked.Value);
-            swordDamage.SetMagic(magic.IsChecked.Value);
-
-
-            swordDamage.CalculateDamage();
+            swordDamage = new SwordDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
             DisplayDamege();
         }
 
@@ -50,13 +45,13 @@ namespace Sword_Wpf
         }
         private void flaming_Checked(object sender, RoutedEventArgs e)
         {
-            swordDamage.SetFlamin(true);
+            swordDamage.Flaming = true;
             DisplayDamege();
         }
 
         private void magic_Checked(object sender, RoutedEventArgs e)
         {
-            swordDamage.SetMagic(true);
+            swordDamage.SetMagic = true;
             DisplayDamege();
                
         }
@@ -64,6 +59,18 @@ namespace Sword_Wpf
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RollDice();
+        }
+
+        private void flaming_Unchecked(object sender, RoutedEventArgs e)
+        {
+            swordDamage.Flaming = false;
+            DisplayDamege();
+        }
+
+        private void magic_Unchecked(object sender, RoutedEventArgs e)
+        {
+            swordDamage.SetMagic = false;
+            DisplayDamege();
         }
     }
 }
