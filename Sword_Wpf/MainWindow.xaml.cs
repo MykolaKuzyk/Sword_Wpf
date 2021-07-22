@@ -22,13 +22,15 @@ namespace Sword_Wpf
     public partial class MainWindow : Window
     {
         Random random = new Random();
-        SwordDamage swordDamage ;
+        SwordDamage swordDamage;
+        ArrowDamage arrowDamage; 
 
 
         public MainWindow()
         {
             InitializeComponent();
             swordDamage = new SwordDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
+            arrowDamage = new ArrowDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
             DisplayDamege();
             
         }
@@ -36,21 +38,33 @@ namespace Sword_Wpf
         public void RollDice()
         {
             swordDamage = new SwordDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
+            arrowDamage = new ArrowDamage(random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7));
             DisplayDamege();
         }
 
         public void DisplayDamege()
         {
-            damage.Content = " Rolled " + swordDamage.Roll + " for " + swordDamage.Damage + " HP ";
+            if (Arrow_weapon.IsChecked == true)
+            {
+                damage.Content = "Arrow damage Rolled " + arrowDamage.Roll + " for " + arrowDamage.Damage + " HP ";
+            }
+            else
+            {
+                damage.Content = "Sword damage Rolled " + swordDamage.Roll + " for " + swordDamage.Damage + " HP ";
+            }
+            
+         
         }
         private void flaming_Checked(object sender, RoutedEventArgs e)
         {
+            arrowDamage.Flaming = true;
             swordDamage.Flaming = true;
             DisplayDamege();
         }
 
         private void magic_Checked(object sender, RoutedEventArgs e)
         {
+            arrowDamage.SetMagic = true;
             swordDamage.SetMagic = true;
             DisplayDamege();
                
@@ -63,12 +77,14 @@ namespace Sword_Wpf
 
         private void flaming_Unchecked(object sender, RoutedEventArgs e)
         {
+            arrowDamage.Flaming = false;
             swordDamage.Flaming = false;
             DisplayDamege();
         }
 
         private void magic_Unchecked(object sender, RoutedEventArgs e)
         {
+            arrowDamage.SetMagic = false;
             swordDamage.SetMagic = false;
             DisplayDamege();
         }
